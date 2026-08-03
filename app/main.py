@@ -118,8 +118,8 @@ class Task(TaskBase):
 
 app = FastAPI(title="Task Tracker", version="2.0.0")
 
-STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 tasks: dict[int, Task] = {}
 next_task_id = 1
@@ -127,7 +127,7 @@ next_task_id = 1
 
 @app.get("/", include_in_schema=False)
 def frontend() -> FileResponse:
-    return FileResponse(STATIC_DIR / "index.html")
+    return FileResponse(FRONTEND_DIR / "index.html")
 
 
 @app.get("/health")
