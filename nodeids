@@ -1,0 +1,12 @@
+[
+  "tests/test_tasks.py::test_blank_tag_is_rejected",
+  "tests/test_tasks.py::test_create_and_list_task",
+  "tests/test_tasks.py::test_create_with_valid_due_date",
+  "tests/test_tasks.py::test_delete_missing_task_returns_404",
+  "tests/test_tasks.py::test_filter_by_tag_is_case_insensitive",
+  "tests/test_tasks.py::test_invalid_due_date_format_is_rejected",
+  "tests/test_tasks.py::test_overdue_filter_excludes_done_and_future_tasks",
+  "tests/test_tasks.py::test_tags_are_trimmed_deduplicated_and_preserved",
+  "tests/test_tasks.py::test_update_can_clear_due_date",
+  "tests/test_tasks.py::test_update_task_status"
+]
