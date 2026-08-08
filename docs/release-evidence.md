@@ -14,9 +14,9 @@
 ## CI evidence
 
 - Workflow file: `.github/workflows/ci.yml`
-- Latest run link or note: workflow prepared for the `final-project` push. The
-  hosted run will execute both pytest and the Docker build/run/health contract;
-  record its URL after the branch is uploaded.
+- Latest run: [CI #1 - Success](https://github.com/Malakmahdi/task-tracker-mid-course/actions/runs/31255644584),
+  triggered by the `final-project` push on 2026-08-08. Both the `test` and
+  `docker` jobs passed in 32 seconds.
 - Test command used by CI: `python -m pytest -q`
 - Shortcut check: no `continue-on-error`, no `|| true`, pytest is not skipped,
   Python is `3.12.11`, and dependencies are installed from `requirements.txt`.
@@ -25,9 +25,10 @@
 
 - Build command: `docker build -t task-tracker:final .`
 - Run command: `docker run --rm --name task-tracker-final -p 8000:8000 task-tracker:final`
-- `/health` check: this workstation has no Docker-compatible runtime installed,
-  so a local container result is not claimed. The CI `docker` job builds the
-  image, starts it, and requires `curl --fail http://127.0.0.1:8000/health`.
+- `/health` check: the successful CI `docker` job built the image, started the
+  container, and passed `curl --fail http://127.0.0.1:8000/health`. This
+  workstation has no Docker-compatible runtime installed, so no local container
+  result is claimed.
 - Non-root check: image declares `USER app`; runtime identity will be checked with
   `docker run --rm task-tracker:final id`.
 - No-baked-secrets check: `.dockerignore` excludes `.env`, `.env.*`, Git data,
@@ -42,4 +43,4 @@
 | `python -m pytest -q` runs the suite | Clean virtual environment and pytest output | Pass: 10 tests | None |
 | `GET /health` returns HTTP 200 and `{"status":"ok"}` | Running Uvicorn plus `Invoke-WebRequest` | Pass | None |
 | FastAPI serves the Kanban frontend | Browser check at `/`, three columns and modal | Pass | Renamed `static/` to required `frontend/` and updated the documented server path |
-| Docker runs as non-root and serves `/health` | CI `docker` job checks `id -u`, builds, runs, and curls health | Pending first hosted run; local Docker unavailable | Added executable hosted verification instead of inventing a local result |
+| Docker runs as non-root and serves `/health` | Successful CI #1 `docker` job checks `id -u`, builds, runs, and curls health | Pass | Kept executable hosted verification and did not invent a local result |
